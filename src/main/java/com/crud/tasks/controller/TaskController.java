@@ -13,7 +13,7 @@ import java.util.List;
 public class TaskController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getTasks")
-    public List<TaskDto> getTasks(){
+    public List<TaskDto> getTasks() {
         return new ArrayList<>();
     }
 
@@ -24,8 +24,8 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "delete")
     public void deleteTask() {
-
     }
+
     @RequestMapping(method = RequestMethod.PUT, value = "updateTask")
     public TaskDto updateTask(TaskDto taskDto) {
         return new TaskDto(1L, "Edited test title", "Test content");
@@ -33,7 +33,6 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.GET, value = "createTask")
     public void createTask(TaskDto taskDto) {
-
     }
 
 }
