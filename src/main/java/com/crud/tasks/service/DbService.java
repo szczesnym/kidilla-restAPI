@@ -25,7 +25,7 @@ public class DbService {
     }
 
     public void delete(Task task) {
-            taskRepository.deleteById(task.getId());
+        taskRepository.deleteById(task.getId());
     }
 
 }
