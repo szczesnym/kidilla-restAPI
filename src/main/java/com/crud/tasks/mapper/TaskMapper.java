@@ -38,4 +38,17 @@ public class TaskMapper {
                 .map(taskDto -> new Task(taskDto.getId(), taskDto.getTitle(), taskDto.getContent()))
                 .collect(Collectors.toList());
     }
+
+    public Long mapIdToDtoId(long taskId) {
+        Task tempTask = new Task();
+        tempTask.setId(taskId);
+        return mapToTaskDto(tempTask).getId();
+    }
+
+    public Long mapDtoIdToId(long taskId) {
+        TaskDto tempTask = new TaskDto();
+        tempTask.setId(taskId);
+        return mapToTask(tempTask).getId();
+    }
+
 }
