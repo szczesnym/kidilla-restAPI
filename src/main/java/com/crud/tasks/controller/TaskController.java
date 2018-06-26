@@ -12,6 +12,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/v1/task")
 public class TaskController {
     @Autowired
@@ -23,6 +24,13 @@ public class TaskController {
     public List<TaskDto> getTasks() {
         return taskMapper.mapToTaskDtoList(dbService.getAllTasks());
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "searchTasks")
+    public List<TaskDto> searchTasks( @RequestParam("searchPattern") String searchPattern) {
+        return taskMapper.mapToTaskDtoList(dbService.searchTasks(searchPattern));
+    }
+
+
 
     @RequestMapping(method = RequestMethod.GET, value = "getTask")
     public TaskDto getTask(@RequestParam("taskId") final long taskID) {
@@ -45,10 +53,11 @@ public class TaskController {
     public TaskDto updateTask(@RequestBody TaskDto taskDto) {
         return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
-
+    @CrossOrigin(origins = "*")
     @RequestMapping(method = RequestMethod.POST, value = "createTask", consumes = APPLICATION_JSON_VALUE)
-    public void createTask(@RequestBody  TaskDto taskDto) {
+    public TaskDto createTask(@RequestBody  TaskDto taskDto) {
         dbService.saveTask(taskMapper.mapToTask(taskDto));
+        return taskDto;
     }
 
 }

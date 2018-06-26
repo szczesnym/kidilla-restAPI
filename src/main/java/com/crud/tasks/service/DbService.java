@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.crud.tasks.domain.Task;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class DbService {
@@ -14,6 +16,14 @@ public class DbService {
 
     public List<Task> getAllTasks() {
         return this.taskRepository.findAll();
+    }
+
+    public List<Task> searchTasks(String searchPattern) {
+        List<Task> resultSearch = new ArrayList<>();
+
+        resultSearch.addAll(this.taskRepository.findByNameContaining(searchPattern));
+        resultSearch.addAll(this.taskRepository.findByContentContaining(searchPattern));
+        return resultSearch;
     }
 
     public Task getById(long taskId) {
