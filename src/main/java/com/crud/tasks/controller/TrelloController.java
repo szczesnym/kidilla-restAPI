@@ -24,6 +24,7 @@ public class TrelloController {
     @RequestMapping(method = RequestMethod.GET, value = "getTrelloBoards")
     public List<TrelloBoardDto> getTrelloBoards() {
         List<TrelloBoardDto> trelloBoards =  trelloClient.getTrelloBoards();
+        trelloBoards.stream().forEach(trelloBoard -> trelloBoard.getLists().forEach(System.out::println ));
         return trelloBoards.stream()
                 .filter(trelloBoard -> trelloBoard.getId() != null && trelloBoard.getName() != (null) && trelloBoard.getName().contains("Kodilla"))
                 .collect(Collectors.toList());

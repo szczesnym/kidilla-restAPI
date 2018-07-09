@@ -25,7 +25,7 @@ public class TrelloBoardDto {
     private boolean isClosed;
 
     @JsonProperty("lists")
-    private List<TrelloBoardDto> lists;
+    private List<TrelloListDto> lists;
 
     @Override
     public String toString() {
