@@ -1,41 +1,41 @@
 package com.crud.tasks.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
-import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreatedTrelloCard {
-    @JsonProperty("id")
-    private String id;
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreatedTrelloCard.class);
+    private String id, name, shortUrl;
+    private int board, votes, card;
 
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("shortUrl")
-    private String shortUrl;
-
-    private TrelloAttachmentByType trelloAttachmentsByType;
-    private int votes = 0;
-
-    @JsonProperty("badges")
-    private void unpackNestedBadges(Map<String, Object> badges) {
-        this.votes = (int)badges.get("votes");
-
-        Map<String, Object>  attachmentsByType = (Map<String,Object>)badges.get("attachmentsByType");
-        System.out.println(attachmentsByType);
-        Map<String, Object> trello =  (Map<String,Object>)attachmentsByType.get("trello");
-        this.trelloAttachmentsByType = new TrelloAttachmentByType((int)trello.get("board"), (int)trello.get("card"));
+    public CreatedTrelloCard(String jsonResponse) {
+        super();
+        LOGGER.info("Input JSON:{}", jsonResponse);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(jsonResponse);
+            this.id = jsonNode.get("id").asText();
+            this.name = jsonNode.get("name").asText();
+            this.shortUrl = jsonNode.get("shortUrl").asText();
+            this.board = jsonNode.get("badges").get("attachmentsByType").get("trello").get("board").asInt();
+            this.card = jsonNode.get("badges").get("attachmentsByType").get("trello").get("card").asInt();
+            this.votes = jsonNode.get("badges").get("votes").asInt();
+        } catch (IOException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+        }
     }
-
 }
