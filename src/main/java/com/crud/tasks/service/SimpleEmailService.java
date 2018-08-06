@@ -19,7 +19,9 @@ public class SimpleEmailService {
     private SimpleMailMessage createMailMessage(final Mail mail) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
-        mailMessage.setCc(mail.getMailToCc());
+        if(! mail.getMailToCc().isEmpty()) {
+            mailMessage.setCc(mail.getMailToCc());
+        }
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
         return mailMessage;
@@ -33,7 +35,9 @@ public class SimpleEmailService {
             javaMailSender.send(mailMessage);
             LOGGER.info("E-mail send");
         } catch (MailException e) {
+            LOGGER.error("Mail", mail, mail);
             LOGGER.error("Sending failed", e.getMessage(), e);
+
         }
     }
 }
