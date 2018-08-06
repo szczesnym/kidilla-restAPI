@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
@@ -21,6 +22,13 @@ public class CreatedTrelloCard {
     private static final Logger LOGGER = LoggerFactory.getLogger(CreatedTrelloCard.class);
     private String id, name, shortUrl;
     private int board, votes, card;
+
+
+    public CreatedTrelloCard(String id, String name, String shortUrl) {
+        this.id = id;
+        this.name = name;
+        this.shortUrl = shortUrl;
+    }
 
     public CreatedTrelloCard(String jsonResponse) {
         super();

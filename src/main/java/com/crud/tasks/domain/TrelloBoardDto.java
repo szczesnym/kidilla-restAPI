@@ -35,4 +35,10 @@ public class TrelloBoardDto {
                 ", id='" + id + '\'' +
                 '}';
     }
+
+    public TrelloBoardDto(String name, String id, List<TrelloListDto> lists) {
+        this.name = name;
+        this.id = id;
+        this.lists = lists;
+    }
 }
