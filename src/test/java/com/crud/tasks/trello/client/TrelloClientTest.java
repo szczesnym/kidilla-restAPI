@@ -1,8 +1,6 @@
 package com.crud.tasks.trello.client;
 
-import com.crud.tasks.domain.CreatedTrelloCard;
 import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,17 +59,17 @@ public class TrelloClientTest {
 
     @Test
     public void shouldReturnEmptyList() {
+        //Given
         TrelloBoardDto[] trelloBoards = new TrelloBoardDto[1];
         trelloBoards[0] = new TrelloBoardDto("test_board", "test_id", new ArrayList<>());
-
         URI uri = trelloClient.buildTrelloGetBoardsUrl();
-
         when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(new TrelloBoardDto[0]);
-        //When
 
+        //When
         List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getTrelloBoards();
+
         //Then
-        assertEquals(0,fetchedTrelloBoards.size() );
+        assertEquals(0, fetchedTrelloBoards.size());
     }
 
 /*    @Test
