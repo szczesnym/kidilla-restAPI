@@ -16,4 +16,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     @Query("FROM tasks where description like %:searchPattern%")
     List<Task> findByContentContaining(@Param("searchPattern") String searchPattern);
 
+    @Override
+    long count();
+
 }
