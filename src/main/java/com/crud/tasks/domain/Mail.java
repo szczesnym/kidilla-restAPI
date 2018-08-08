@@ -9,5 +9,4 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Mail {
     private String mailTo, mailToCc, subject, message;
-
 }
