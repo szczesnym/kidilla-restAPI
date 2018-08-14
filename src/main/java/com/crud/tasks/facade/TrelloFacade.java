@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TrelloFacade {
     private final static Logger LOGGER = LoggerFactory.getLogger(TrelloFacade.class);
