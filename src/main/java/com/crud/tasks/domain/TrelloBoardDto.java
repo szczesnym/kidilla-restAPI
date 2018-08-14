@@ -29,17 +29,17 @@ public class TrelloBoardDto {
     @JsonProperty("lists")
     private List<TrelloListDto> lists;
 
+    public TrelloBoardDto(String name, String id, List<TrelloListDto> lists) {
+        this.name = name;
+        this.id = id;
+        this.lists = lists;
+    }
+
     @Override
     public String toString() {
         return "TrelloBoardDto{" +
                 "name='" + name + '\'' +
                 ", id='" + id + '\'' +
                 '}';
-    }
-
-    public TrelloBoardDto(String name, String id, List<TrelloListDto> lists) {
-        this.name = name;
-        this.id = id;
-        this.lists = lists;
     }
 }

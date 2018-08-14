@@ -51,7 +51,7 @@ public class TrelloMapperTestSuite {
         Assert.assertEquals(1, listTrelloBoardDto.size());
         Assert.assertEquals("Board 1", sutTrelloBoardDto.getId());
         Assert.assertEquals("Board1", sutTrelloBoardDto.getName());
-        Assert.assertTrue(sutTrelloBoardDto.getLists().get(0).equals(trelloListDto1));
+        Assert.assertTrue(sutTrelloBoardDto.getLists().get(0).equals(new TrelloListDto("List1", "List 1", true)));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class TrelloMapperTestSuite {
         Assert.assertEquals(1, listTrelloBoard.size());
         Assert.assertEquals("Board Dto 1", sutTrelloBoard.getId());
         Assert.assertEquals("BoardDto1", sutTrelloBoard.getName());
-        Assert.assertTrue(sutTrelloBoard.getLists().get(0).equals(trelloList1));
+        Assert.assertTrue(sutTrelloBoard.getLists().get(0).equals(new TrelloList("ListDto1", "List Dto 1", false)));
 
 
     }
