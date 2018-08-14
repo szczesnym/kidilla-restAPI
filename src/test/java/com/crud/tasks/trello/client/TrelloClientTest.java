@@ -84,14 +84,14 @@ public class TrelloClientTest {
         );
         //URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
 
-        CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
+        CreatedTrelloCardDto createdTrelloCard = new CreatedTrelloCardDto(
                 "1",
                 "Test task",
                 "http://test.com"
         );
-        when(restTemplate.postForObject(trelloClient.buildTrelloCreateNewCardUrl(trelloCardDto), null, String.class)).thenReturn(new CreatedTrelloCard());
+        when(restTemplate.postForObject(trelloClient.buildTrelloCreateNewCardUrl(trelloCardDto), null, String.class)).thenReturn(new CreatedTrelloCardDto());
         //When
-        CreatedTrelloCard newCard = trelloClient.createNewCard(trelloCardDto);
+        CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
 
         //Then
         assertEquals(1, newCard.getId());

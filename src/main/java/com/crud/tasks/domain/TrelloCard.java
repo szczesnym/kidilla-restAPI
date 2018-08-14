@@ -2,16 +2,12 @@ package com.crud.tasks.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
-
 @AllArgsConstructor
 @Getter
-@NoArgsConstructor
-public class TrelloCardDto {
-
+public class TrelloCard {
     private String name;
     private String description;
     private String pos;
@@ -20,8 +16,8 @@ public class TrelloCardDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TrelloCardDto)) return false;
-        TrelloCardDto that = (TrelloCardDto) o;
+        if (!(o instanceof TrelloCard)) return false;
+        TrelloCard that = (TrelloCard) o;
         return Objects.equals(getName(), that.getName()) &&
                 Objects.equals(getDescription(), that.getDescription()) &&
                 Objects.equals(getPos(), that.getPos()) &&

@@ -1,15 +1,15 @@
 package com.crud.tasks.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
+@EqualsAndHashCode
 public class TrelloListDto {
     @JsonProperty("id")
     private String id;
@@ -19,4 +19,5 @@ public class TrelloListDto {
 
     @JsonProperty("closed")
     private boolean isClosed;
+
 }
