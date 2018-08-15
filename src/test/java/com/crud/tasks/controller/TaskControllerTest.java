@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,7 +20,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -163,14 +161,11 @@ public class TaskControllerTest {
 
         //When & Then
         mockMvc.perform(put("/v1/task/updateTask").contentType(MediaType.APPLICATION_JSON).content(jsonTaskToUpdate))
-                .andExpect(status().isOk());
-            // https://stackoverflow.com/questions/38030875/test-spring-restful-put-method-failed-using-mockmvc
-            // wydaje mi się że MockMcv nie zwraca obiektu na metodę PUT a tylko status - 200, jesli jest OK.
-
-            //.andExpect(jsonPath("$", hasSize(1)));
-            //.andExpect(jsonPath("$.id", is(1)))
-            //.andExpect(jsonPath("$.title", is("test Task - update")))
-            //.andExpect(jsonPath("$.content", is("Update result task")));
+                .andExpect(status().isOk())
+                //.andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("test Task - update")))
+                .andExpect(jsonPath("$.content", is("Update result task")));
     }
 
     @Test
