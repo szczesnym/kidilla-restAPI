@@ -97,7 +97,7 @@ public class TaskControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].title", is("test Task")))
-        ł.andExpect(jsonPath("$[0].content", is("Search result task")));
+        .andExpect(jsonPath("$[0].content", is("Search result task")));
 
     }
 }
