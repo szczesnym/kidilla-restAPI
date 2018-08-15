@@ -15,10 +15,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -44,13 +43,9 @@ public class TrelloClientTest {
         //Given
         TrelloBoardDto[] trelloBoards = new TrelloBoardDto[1];
         trelloBoards[0] = new TrelloBoardDto("test_board", "test_id", new ArrayList<>());
-
-        //URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
-        //URI uri = trelloClient.buildTrelloGetBoardsUrl();
-
         when(restTemplate.getForObject(any(URI.class), eq(TrelloBoardDto[].class))).thenReturn(trelloBoards);
-        //When
 
+        //When
         List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getTrelloBoards();
 
         //Then
@@ -72,31 +67,4 @@ public class TrelloClientTest {
         //Then
         assertEquals(0, fetchedTrelloBoards.size());
     }
-
-/*    @Test
-    public void shouldCreateCard() throws URISyntaxException{
-        //Given
-        TrelloCardDto trelloCardDto  =new TrelloCardDto(
-                "Test task",
-                "Test Description",
-                "top",
-                "test_id"
-        );
-        //URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
-
-        CreatedTrelloCardDto createdTrelloCard = new CreatedTrelloCardDto(
-                "1",
-                "Test task",
-                "http://test.com"
-        );
-        when(restTemplate.postForObject(trelloClient.buildTrelloCreateNewCardUrl(trelloCardDto), null, String.class)).thenReturn(new CreatedTrelloCardDto());
-        //When
-        CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
-
-        //Then
-        assertEquals(1, newCard.getId());
-        assertEquals("Test task", newCard.getName());
-        assertEquals("http://test.com", newCard.getShortUrl());
-    }*/
-
 }

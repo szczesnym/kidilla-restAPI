@@ -91,10 +91,9 @@ public class TrelloFacadeTest {
                             {
                                     assertEquals("1", trelloListDto.getId());
                                     assertEquals("test_list", trelloListDto.getName());
-                                    assertEquals(false, trelloBoardDto.isClosed());
+                                    assertFalse( trelloBoardDto.isClosed());
                             }
                     );
-
                 }
         );
     }

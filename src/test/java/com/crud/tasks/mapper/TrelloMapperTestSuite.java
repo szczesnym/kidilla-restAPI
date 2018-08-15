@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -64,8 +63,6 @@ public class TrelloMapperTestSuite {
         Assert.assertEquals("Board Dto 1", sutTrelloBoard.getId());
         Assert.assertEquals("BoardDto1", sutTrelloBoard.getName());
         Assert.assertTrue(sutTrelloBoard.getLists().get(0).equals(new TrelloList("ListDto1", "List Dto 1", false)));
-
-
     }
 
     @Test
@@ -76,8 +73,6 @@ public class TrelloMapperTestSuite {
         Assert.assertEquals(2, sutListTrelloList.size());
         Assert.assertTrue(sutListTrelloList.get(0).equals(new TrelloList("ListDto1", "List Dto 1", false)));
         Assert.assertTrue(sutListTrelloList.get(1).equals(new TrelloList("ListDto2", "List Dto 2", true)));
-
-
     }
 
     @Test
@@ -97,12 +92,6 @@ public class TrelloMapperTestSuite {
         TrelloCard sutTrelloCard = trelloMapper.mapToCard(trelloCardDto);
 
         //Then
-/*        Assert.assertEquals("Test CardDto", sutTrelloCard.getName());
-        Assert.assertEquals("Desc test Card DTO", sutTrelloCard.getDescription());
-        Assert.assertEquals("LEFT", sutTrelloCard.getPos());
-        Assert.assertEquals("ListID", sutTrelloCard.getListId());
-Do omówienia który rodzaj testów jest lepszy
-*/
         Assert.assertTrue(sutTrelloCard.equals(responseCard));
 
     }

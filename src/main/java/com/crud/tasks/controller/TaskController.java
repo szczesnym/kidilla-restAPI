@@ -54,6 +54,7 @@ public class TaskController {
     public TaskDto updateTask(@RequestBody TaskDto taskDto) {
         return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
+
     @CrossOrigin(origins = "*")
     @RequestMapping(method = RequestMethod.POST, value = "createTask", consumes = APPLICATION_JSON_VALUE)
     public TaskDto createTask(@RequestBody  TaskDto taskDto) {

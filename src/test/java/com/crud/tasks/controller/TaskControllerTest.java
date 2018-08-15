@@ -3,6 +3,7 @@ package com.crud.tasks.controller;
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
+import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,13 +19,16 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(TaskController.class)
+
+//Czemu pokrycie testów TaskControllr pokazuje 0% ?
 
 public class TaskControllerTest {
     @MockBean
@@ -97,7 +101,55 @@ public class TaskControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].title", is("test Task")))
-        .andExpect(jsonPath("$[0].content", is("Search result task")));
+                .andExpect(jsonPath("$[0].content", is("Search result task")));
+    }
 
+    @Test
+    public void shouldDeleteTask() throws Exception {
+        //Given
+        Long deleteId = 1L;
+        TaskDto deletedTask = new TaskDto(1L, "test Task", "Delete result task");
+
+        when(taskController.deleteTask(deleteId)).thenReturn(deletedTask);
+        //When & Then
+        mockMvc.perform(delete("/v1/task/deleteTask").param("taskId", deleteId.toString()))
+                .andExpect(status().isOk())
+                //.andExpect(jsonPath("$", hasSize(1))); - czemu to nie działa ?
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("test Task")))
+                .andExpect(jsonPath("$.content", is("Delete result task")));
+    }
+
+    @Test
+    public void shouldUpdateTask() throws Exception {
+        //Given
+        TaskDto taskToUpdate = new TaskDto(1L, "test Task - update", "Update result task");
+        Gson gson = new Gson();
+        String jsonTaskToUpdate = gson.toJson(taskToUpdate);
+        when(taskController.updateTask(any(TaskDto.class))).thenReturn(taskToUpdate); //czemu nie działa updateTask(taskToUpdate) ?
+        //When & Then
+        mockMvc.perform(put("/v1/task/updateTask").contentType(MediaType.APPLICATION_JSON).content(jsonTaskToUpdate))
+                .andExpect(status().isOk())
+                //.andExpect(jsonPath("$", hasSize(1)));
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("test Task - update")))
+                .andExpect(jsonPath("$.content", is("Update result task")));
+    }
+
+    @Test
+    public void shouldCreateTask() throws Exception {
+        //When
+        TaskDto taskToCreate = new TaskDto(2L, "Task to create", "Task to create");
+        Gson gson = new Gson();
+        String jsonTaskToCreate = gson.toJson(taskToCreate);
+        when(taskController.createTask(any(TaskDto.class))).thenReturn(taskToCreate); //czemu nie działa createTask(taskToCerate) ?
+
+        //When & Then
+        mockMvc.perform(post("/v1/task/createTask").contentType(MediaType.APPLICATION_JSON).content(jsonTaskToCreate).characterEncoding("UTF-8"))
+                .andExpect(status().isOk())
+                //.andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$.id", is(2)))
+                .andExpect(jsonPath("$.title", is("Task to create")))
+                .andExpect(jsonPath("$.content", is("Task to create")));
     }
 }
