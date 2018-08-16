@@ -18,8 +18,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -36,12 +37,13 @@ public class TaskControllerTest {
     DbService dbService;
 
     @MockBean
+    //@Autowired
     private TaskMapper taskMapper;
 
     @Autowired
     private MockMvc mockMvc;
 
-    private TaskController taskController;
+    //private TaskController taskController;
     private List<TaskDto> listOfTasksDto;
     private List<Task> listOfTasks;
     private TaskDto taskDto1, taskDto2;
@@ -49,7 +51,8 @@ public class TaskControllerTest {
 
     @Before
     public void init() {
-        taskController = new TaskController();
+        //taskMapper = new TaskMapper();
+        //taskController = new TaskController();
         listOfTasksDto = new ArrayList<>();
         listOfTasks = new ArrayList<>();
         taskDto1 = new TaskDto(1L, "TestTask1", "Content1");
@@ -141,7 +144,7 @@ public class TaskControllerTest {
         //When & Then
         mockMvc.perform(delete("/v1/task/deleteTask").param("taskId", deleteId.toString()))
                 .andExpect(status().isOk())
-                //.andExpect(jsonPath("$", hasSize(1))); - czemu to nie działa ?
+                .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("test Task")))
                 .andExpect(jsonPath("$.content", is("Delete result task")));
@@ -162,7 +165,7 @@ public class TaskControllerTest {
         //When & Then
         mockMvc.perform(put("/v1/task/updateTask").contentType(MediaType.APPLICATION_JSON).content(jsonTaskToUpdate))
                 .andExpect(status().isOk())
-                //.andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("test Task - update")))
                 .andExpect(jsonPath("$.content", is("Update result task")));
@@ -183,7 +186,7 @@ public class TaskControllerTest {
         //When & Then
         mockMvc.perform(post("/v1/task/createTask").contentType(MediaType.APPLICATION_JSON).content(jsonTaskToCreate).characterEncoding("UTF-8"))
                 .andExpect(status().isOk())
-                //.andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.id", is(2)))
                 .andExpect(jsonPath("$.title", is("Task to create")))
                 .andExpect(jsonPath("$.content", is("Task to create")));
