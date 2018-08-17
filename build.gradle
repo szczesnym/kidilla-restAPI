@@ -31,13 +31,16 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.projectlombok:lombok:1.18.0')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('mysql:mysql-connector-java')
+    //for local deployment compile('mysql:mysql-connector-java')
+    //for heroku deployment
+    compile('org.postgresql:postgresql:42.2.4')
     compile 'org.springframework.boot:spring-boot-starter-mail:2.0.4.RELEASE'
     compile('com.google.code.gson:gson:2.8.2')
     compile('org.springframework.boot:spring-boot-starter-actuator:2.0.4.RELEASE')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
 
+    //for haroku deployment
     //providedRuntime group:'org.springframework.boot', name:'spring-boot-starter-tomcat',version: '2.0.3.RELEASE'
 
 }
