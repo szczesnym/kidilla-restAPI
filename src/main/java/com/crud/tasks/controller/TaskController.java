@@ -31,18 +31,14 @@ public class TaskController {
         return taskMapper.mapToTaskDtoList(dbService.searchTasks(searchPattern));
     }
 
-
-
     @RequestMapping(method = RequestMethod.GET, value = "getTask")
     public TaskDto getTask(@RequestParam("taskId") final long taskID) {
         return taskMapper.mapToTaskDto(dbService.getById(taskID));
-        //czy to nie jest za prosto ? A jak dtoTask.id!=task.id ?
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")
     public TaskDto deleteTask(@RequestParam("taskId") long dtoTaskId) {
         Task taskToDelete = dbService.getById(taskMapper.mapDtoIdToId(dtoTaskId));
-        //czy kontroler powinien operować na obiektach domenowych ??
 
         if(!taskToDelete.equals(null)) {
             dbService.delete(taskToDelete);
