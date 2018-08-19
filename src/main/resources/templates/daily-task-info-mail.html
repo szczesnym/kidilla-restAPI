@@ -121,6 +121,21 @@
                                             </tbody>
                                         </table>
                                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
+                                            List of tasks:
+                                        </p>
+                                        <ul th:each="task : ${tasks_list}">
+                                            <li th:text="'Task ID:'+${task.getId()}"></li>
+                                            <li th:text="'Task Name:'+${task.getTitle()}"></li>
+                                            <li th:text="'Task Content:'+${task.getContent()}"></li>
+                                            <br>
+                                        </ul>
+                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
+                                            <span th:text="${goodbye_message}"></span>
+                                        </p>
+
+
+
+                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
                                             Application functionality:
                                         </p>
                                         <ul th:each="function : ${application_functionality}">

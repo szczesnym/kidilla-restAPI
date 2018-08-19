@@ -43,7 +43,7 @@ public class TrelloService {
                     SUBJECT,
                     "New card: " + newCard.getName() + " has been created"
             );
-            emailService.send(mail);
+            emailService.sendTrelloEmail(mail);
         }
         return newCard;
     }
