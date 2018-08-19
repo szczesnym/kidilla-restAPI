@@ -31,12 +31,12 @@ public class TaskController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/tasks/{taskId}")
-    public TaskDto getTask(@RequestParam("taskId") final long taskID) {
+    public TaskDto getTask(@PathVariable("taskId") final long taskID) {
         return taskMapper.mapToTaskDto(dbService.getById(taskID));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/tasks/{taskId}")
-    public TaskDto deleteTask(@RequestParam("taskId") long dtoTaskId) {
+    public TaskDto deleteTask(@PathVariable("taskId") long dtoTaskId) {
         Task taskToDelete = dbService.getById(taskMapper.mapDtoIdToId(dtoTaskId));
 
         if(!taskToDelete.equals(null)) {

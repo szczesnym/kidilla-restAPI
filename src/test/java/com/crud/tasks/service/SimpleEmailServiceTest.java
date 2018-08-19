@@ -33,7 +33,7 @@ public class SimpleEmailServiceTest {
         mailMessage.setText(mail.getMessage());
 
         //When
-        simpleEmailService.send(mail);
+        simpleEmailService.sendTrelloEmail(mail);
 
         //Then
         verify(javaMailSender, times(1)).send(mailMessage);

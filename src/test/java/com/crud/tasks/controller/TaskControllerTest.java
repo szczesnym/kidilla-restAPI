@@ -18,9 +18,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -28,8 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(TaskController.class)
-
-//Czemu pokrycie testów TaskControllr pokazuje 0% ?
 
 public class TaskControllerTest {
 
@@ -75,7 +73,7 @@ public class TaskControllerTest {
         when(dbService.getAllTasks()).thenReturn(emptyTaskList);
 
         //When & Then
-        mockMvc.perform(get("/v1/task/getTasks"))
+        mockMvc.perform(get("/v1/tasks"))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(0)));
     }
@@ -87,7 +85,7 @@ public class TaskControllerTest {
         when(taskMapper.mapToTaskDtoList(listOfTasks)).thenReturn(listOfTasksDto);
 
         //When & Then
-        mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/tasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].title", is("TestTask1")));
@@ -102,7 +100,7 @@ public class TaskControllerTest {
         when(taskMapper.mapToTaskDtoList(resultOfSearch)).thenReturn(new ArrayList<TaskDto>());
 
         //When & Then
-        mockMvc.perform(get("/v1/task/searchTasks").param("searchPattern", searchParam))
+        mockMvc.perform(get("/v1/searchTasks").param("searchPattern", searchParam))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
@@ -122,7 +120,7 @@ public class TaskControllerTest {
         when(taskMapper.mapToTaskDtoList(resultOfSearch)).thenReturn(resultOfDtoSearch);
 
         //When & Then
-        mockMvc.perform(get("/v1/task/searchTasks").param("searchPattern", searchParam).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/searchTasks").param("searchPattern", searchParam).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
@@ -142,7 +140,7 @@ public class TaskControllerTest {
         when(dbService.getById(deleteId)).thenReturn(deletedTask);
 
         //When & Then
-        mockMvc.perform(delete("/v1/task/deleteTask").param("taskId", deleteId.toString()))
+        mockMvc.perform(delete("/v1/tasks/" + deleteId.toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.id", is(1)))
@@ -163,7 +161,7 @@ public class TaskControllerTest {
         when(dbService.saveTask(taskToUpdate)).thenReturn(taskToUpdate);
 
         //When & Then
-        mockMvc.perform(put("/v1/task/updateTask").contentType(MediaType.APPLICATION_JSON).content(jsonTaskToUpdate))
+        mockMvc.perform(put("/v1/tasks").contentType(MediaType.APPLICATION_JSON).content(jsonTaskToUpdate))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.id", is(1)))
@@ -184,7 +182,7 @@ public class TaskControllerTest {
         when(dbService.saveTask(taskToCreate)).thenReturn(taskToCreate);
 
         //When & Then
-        mockMvc.perform(post("/v1/task/createTask").contentType(MediaType.APPLICATION_JSON).content(jsonTaskToCreate).characterEncoding("UTF-8"))
+        mockMvc.perform(post("/v1/tasks").contentType(MediaType.APPLICATION_JSON).content(jsonTaskToCreate).characterEncoding("UTF-8"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.id", is(2)))
