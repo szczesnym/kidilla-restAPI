@@ -13,14 +13,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/v1/task")
+@RequestMapping("/v1")
 public class TaskController {
     @Autowired
     private DbService dbService;
     @Autowired
     private TaskMapper taskMapper;
 
-    @RequestMapping(method = RequestMethod.GET, value = "getTasks")
+    @RequestMapping(method = RequestMethod.GET, value = "/tasks")
     public List<TaskDto> getTasks() {
         return taskMapper.mapToTaskDtoList(dbService.getAllTasks());
     }
@@ -30,12 +30,12 @@ public class TaskController {
         return taskMapper.mapToTaskDtoList(dbService.searchTasks(searchPattern));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getTask")
+    @RequestMapping(method = RequestMethod.GET, value = "/tasks/{taskId}")
     public TaskDto getTask(@RequestParam("taskId") final long taskID) {
         return taskMapper.mapToTaskDto(dbService.getById(taskID));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/tasks/{taskId}")
     public TaskDto deleteTask(@RequestParam("taskId") long dtoTaskId) {
         Task taskToDelete = dbService.getById(taskMapper.mapDtoIdToId(dtoTaskId));
 
@@ -45,13 +45,13 @@ public class TaskController {
         return taskMapper.mapToTaskDto(taskToDelete);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateTask")
+    @RequestMapping(method = RequestMethod.PUT, value = "/tasks")
     public TaskDto updateTask(@RequestBody TaskDto taskDto) {
         return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(method = RequestMethod.POST, value = "createTask", consumes = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/tasks", consumes = APPLICATION_JSON_VALUE)
     public TaskDto createTask(@RequestBody  TaskDto taskDto) {
         dbService.saveTask(taskMapper.mapToTask(taskDto));
         return taskDto;
