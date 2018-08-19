@@ -25,7 +25,7 @@ public class TaskController {
         return taskMapper.mapToTaskDtoList(dbService.getAllTasks());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "searchTasks")
+    @RequestMapping(method = RequestMethod.GET, value = "/searchTasks")
     public List<TaskDto> searchTasks( @RequestParam("searchPattern") String searchPattern) {
         return taskMapper.mapToTaskDtoList(dbService.searchTasks(searchPattern));
     }
